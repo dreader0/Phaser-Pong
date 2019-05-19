@@ -32,6 +32,7 @@
         game.load.image('start', 'img/start.png');
         game.load.image('win', 'img/win.png');
         game.load.image('lose', 'img/lose.png');
+        game.load.image('nums', 'img/nums.png');
     }
     function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -114,7 +115,12 @@
             }, this);
     }
     function startGame() {
-        startButton.destroy();
+        var startTween = game.add.tween(startButton.scale);
+        startTween.to({x:0,y:0}, 150, Phaser.Easing.Linear.None);
+        startTween.onComplete.addOnce(function() {
+            startButton.destroy();
+        }, this);
+        startTween.start();
         ball.reset(game.world.width/2, game.world.height/2)
         ball.body.velocity.set(200, -100);
         game.physics.arcade.checkCollision.left = false;
